@@ -1,4 +1,3 @@
-//jshint esversion:6
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -113,26 +112,6 @@ app.post("/delete",(req,res)=>{
     });
     res.redirect("/");
   }else{
-    
-      
-        // console.log(listName);
-        // List.findOne({name:listName},(err,foundList)=>{
-        //   const itemsList = foundList.items;
-        //   itemsList.forEach(element => {
-
-        //   });
-          
-        // })
-        // // Item.deleteOne({_id: itemId},(err)=>{
-        // //   if(err){
-        // //     console.log(err);
-        // //   }else{
-        // //     console.log("removed");
-        // //   }
-        // // });
-        // res.redirect("/"+listName);
-      
-    
     List.findOneAndUpdate({name : listName},{$pull:{items : {_id: itemId}}},function (err,foundList){
         if(!err){res.redirect("/"+ listName);}
         else{
@@ -171,6 +150,13 @@ app.get("/about", function(req, res){
   res.render("about");
 });
 
-app.listen(3000, function() {
+
+
+
+let port = process.env.PORT;
+if(port == null || port ==""){
+  port = 3000;
+}
+app.listen(port, function() {
   console.log("Server started on port 3000");
 });
